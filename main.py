@@ -3,33 +3,29 @@ import sys
 from mad_lib import MadLib
 
 
+def replace_by_type(text, key, func):
+    while (text.find(key) != -1):
+        text = text.replace(key, func(), 1)
+    return text
+
+
 def parse_text(text):
     m = MadLib()
-    o = []
 
-    for t in text:
-        if (t == "{noun}"):
-            o.append(m.get_noun())
-        elif (t == "{pronoun}"):
-            o.append(m.get_pronoun())
-        elif (t == "{verb}"):
-            o.append(m.get_verb())
-        elif (t == "{adjective}"):
-            o.append(m.get_adjective())
-        elif (t == "{adverb}"):
-            o.append(m.get_adverb())
-        else:
-            o.append(t)
+    KEYS = [("{noun}", m.get_noun), ("{pronoun}", m.get_pronoun),
+            ("{verb}", m.get_verb), ("{adjective}", m.get_adjective),
+            ("{adverb}", m.get_adverb)]
 
-    return o
+    for i in range(len(KEYS)):
+        text = replace_by_type(text, KEYS[i][0], KEYS[i][1])
+
+    return text
 
 
 def main():
-    text = sys.argv[1].split()
+    text = sys.argv[1]
 
-    print(text)
-    parsed = parse_text(text)
-    print(" ".join(parsed))
+    print(parse_text(text))
 
 
 if __name__ == "__main__":

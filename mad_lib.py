@@ -1,3 +1,8 @@
+import requests
+
+URL = 'http://192.168.1.167:5000'
+
+
 class MadLib:
     '''
     Stores all words used.
@@ -5,48 +10,51 @@ class MadLib:
 
     def __init__(self):
         # generate a list of nouns.
-        self.nouns = [
-            "man", "woman", "teacher", "John", "Mary",
-            "home", "office", "town", "countryside", "America"
-        ]
+        self.nouns = []
 
         # generate a list of pronouns.
-        self.pronouns = [
-            "anybody", "anyone", "anything", "each", "either", "everybody", "everyone",
-            "everything", "neither", "nobody", "no one", "nothing", "one", "somebody", "someone", "something"
-        ]
+        self.pronouns = []
 
         # generate a list of verbs.
-        self.verbs = [
-            "question", "add", "itch", "reach", "allow", "jog", "rinse", "bake", "jump",
-            "run", "bang", "scatter", "call", "kick", "stay", "chase", "knit"
-        ]
+        self.verbs = []
 
         # generate a list of adjectives.
-        self.adjectives = [
-            "abundant", "delightful", "high", "nutritious", "square", "adorable",
-            "dirty", "hollow", "obedient", "steep", "agreeable", "drab", "hot",
-            "obnoxious", "sticky"
-        ]
+        self.adjectives = []
 
         # generate a list of adverbs.
-        self.adverbs = [
-            "actually", "famously", "jaggedly", "perfectly", "smoothly", "almost",
-            "far", "jealously", "playfully", "softly", "always", "fast", "joyfully",
-            "politely", "solidly"
-        ]
+        self.adverbs = []
+
+    def add_nouns(self, number):
+        self.nouns = self.nouns + \
+            requests.get(F'{URL}/noun/{str(number)}').json()
 
     def get_noun(self):
         return self.nouns.pop()
 
+    def add_pronouns(self, number):
+        self.pronouns = self.pronouns + \
+            requests.get(F'{URL}/pronoun/{str(number)}').json()
+
     def get_pronoun(self):
-        return self.nouns.pop()
+        return self.pronouns.pop()
+
+    def add_verbs(self, number):
+        self.verbs = self.verbs + \
+            requests.get(F'{URL}/verb/{str(number)}').json()
 
     def get_verb(self):
         return self.verbs.pop()
 
+    def add_adjectives(self, number):
+        self.adjectives = self.adjectives + \
+            requests.get(F'{URL}/adjective/{str(number)}').json()
+
     def get_adjective(self):
         return self.adjectives.pop()
+
+    def add_adverbs(self, number):
+        self.adverbs = self.adverbs + \
+            requests.get(F'{URL}/adverb/{str(number)}').json()
 
     def get_adverb(self):
         return self.adverbs.pop()

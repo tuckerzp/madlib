@@ -9,19 +9,14 @@ class MadLib:
     '''
 
     def __init__(self):
-        # generate a list of nouns.
         self.nouns = []
 
-        # generate a list of pronouns.
         self.pronouns = []
 
-        # generate a list of verbs.
         self.verbs = []
 
-        # generate a list of adjectives.
         self.adjectives = []
 
-        # generate a list of adverbs.
         self.adverbs = []
 
     def add_nouns(self, number):

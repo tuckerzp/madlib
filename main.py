@@ -1,6 +1,18 @@
+#!/usr/bin/env python3
+
 import sys
 
 from mad_lib import MadLib
+
+m = MadLib()
+
+KEYS = [
+    ("{noun}", m.get_noun, m.add_nouns),
+    ("{pronoun}", m.get_pronoun, m.add_pronouns),
+    ("{verb}", m.get_verb, m.add_verbs),
+    ("{adjective}", m.get_adjective, m.add_adjectives),
+    ("{adverb}", m.get_adverb, m.add_adverbs)
+]
 
 
 def replace_by_type(text, key, func):
@@ -10,20 +22,22 @@ def replace_by_type(text, key, func):
 
 
 def parse_text(text):
-    m = MadLib()
-
-    KEYS = [("{noun}", m.get_noun), ("{pronoun}", m.get_pronoun),
-            ("{verb}", m.get_verb), ("{adjective}", m.get_adjective),
-            ("{adverb}", m.get_adverb)]
-
     for i in range(len(KEYS)):
         text = replace_by_type(text, KEYS[i][0], KEYS[i][1])
 
     return text
 
 
+def count_keys(text):
+    for i in range(len(KEYS)):
+        func = KEYS[i][2]
+        func(text.count(KEYS[i][0]))
+
+
 def main():
     text = sys.argv[1]
+
+    count_keys(text)
 
     print(parse_text(text))
 
